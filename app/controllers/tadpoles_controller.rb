@@ -29,6 +29,18 @@ class TadpolesController < ApplicationController
       end
     end
   end
+	
+	def metamorphosize
+		@frog = Frog.new(name: @tadpole.name, pond: @tadpole.pond, color: @tadpole.color)
+		respond_to do |format|
+      if @frog.save
+				@tadpole.delete
+				format.html { redirect_to @frog, notice: 'Tadpole successfully metamorphosized.' }
+      else
+        format.html { render :new }
+      end
+    end
+	end
 
   def update
     respond_to do |format|
